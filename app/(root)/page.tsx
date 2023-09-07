@@ -1,7 +1,9 @@
+import { UserButton } from '@clerk/nextjs';
+
 const Home: React.FC = () => {
   return (
     <main>
-      <h1>Threads</h1>
+      <UserButton afterSignOutUrl="/" />
     </main>
   );
 };
