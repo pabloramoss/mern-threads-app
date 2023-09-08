@@ -1,6 +1,8 @@
+'use client';
 import Link from 'next/link';
 import Image from 'next/image';
-import { OrganizationSwitcher, SignedIn, SignedOut } from '@clerk/nextjs';
+import { OrganizationSwitcher, SignOutButton, SignedIn } from '@clerk/nextjs';
+import router from 'next/router';
 
 const Topbar: React.FC = () => {
   return (
@@ -12,11 +14,13 @@ const Topbar: React.FC = () => {
       <div className="flex items-center gap-1">
         <div className="block md:hidden">
           <SignedIn>
-            <SignedOut>
-              <div className="flex cursor-pointer">
+            <SignOutButton signOutCallback={() => router.push('/sign-in')}>
+              <div className="flex cursor-pointer gap-4 p-4">
                 <Image alt="logout" height={24} src="/assets/logout.svg" width={24} />
+
+                <p className="text-light-2 max-lg:hidden">Logout</p>
               </div>
-            </SignedOut>
+            </SignOutButton>
           </SignedIn>
         </div>
         <OrganizationSwitcher
