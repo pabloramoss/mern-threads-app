@@ -6,6 +6,8 @@ import Image from 'next/image';
 import { useState } from 'react';
 
 import { UserValidation } from '@/lib/validations/user';
+import { isBase64Image } from '@/lib/utils';
+import { useUploadThing } from '@/lib/uploadthing';
 
 import { Form, FormControl, FormLabel, FormField, FormItem } from '../ui/form';
 import { Button } from '../ui/button';
@@ -25,6 +27,7 @@ interface Props {
 }
 const AccountProfile: React.FC<Props> = ({ user, btnTitle }) => {
   const [files, setFiles] = useState<File[]>([]);
+  const { startUpload } = useUploadThing('media');
   const form = useForm({
     resolver: zodResolver(UserValidation),
     defaultValues: {
@@ -58,11 +61,21 @@ const AccountProfile: React.FC<Props> = ({ user, btnTitle }) => {
     }
   };
 
-  function onSubmit(values: z.infer<typeof UserValidation>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-  }
+  const onSubmit = async (values: z.infer<typeof UserValidation>) => {
+    const blob = values.profile_photo;
+
+    const hasImageChanged = isBase64Image(blob);
+
+    if (hasImageChanged) {
+      const imgRes = await startUpload(files);
+
+      if (imgRes && imgRes[0].url) {
+        values.profile_photo = imgRes[0].url;
+      }
+    }
+
+    //TODO: Update user profile
+  };
 
   return (
     <Form {...form}>
