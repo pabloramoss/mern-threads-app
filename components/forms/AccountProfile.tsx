@@ -3,18 +3,11 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import Image from 'next/image';
+import { useState } from 'react';
 
 import { UserValidation } from '@/lib/validations/user';
 
-import {
-  Form,
-  FormControl,
-  FormLabel,
-  FormField,
-  FormItem,
-  FormMessage,
-  FormDescription,
-} from '../ui/form';
+import { Form, FormControl, FormLabel, FormField, FormItem } from '../ui/form';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
@@ -31,6 +24,7 @@ interface Props {
   btnTitle: string;
 }
 const AccountProfile: React.FC<Props> = ({ user, btnTitle }) => {
+  const [files, setFiles] = useState<File[]>([]);
   const form = useForm({
     resolver: zodResolver(UserValidation),
     defaultValues: {
@@ -46,6 +40,22 @@ const AccountProfile: React.FC<Props> = ({ user, btnTitle }) => {
     fieldChange: (value: string) => void,
   ) => {
     e.preventDefault();
+    const fileReader = new FileReader();
+
+    if (e.target.files?.length) {
+      const file = e.target.files[0];
+
+      setFiles(Array.from(e.target.files));
+
+      if (!file.type.includes('image')) return;
+
+      fileReader.onload = async (event) => {
+        const imageDataURL = event.target?.result?.toString() || '';
+
+        fieldChange(imageDataURL);
+      };
+      fileReader.readAsDataURL(file);
+    }
   };
 
   function onSubmit(values: z.infer<typeof UserValidation>) {
