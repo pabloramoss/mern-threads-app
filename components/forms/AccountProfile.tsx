@@ -11,7 +11,7 @@ import { isBase64Image } from '@/lib/utils';
 import { useUploadThing } from '@/lib/uploadthing';
 import { updateUser } from '@/lib/actions/user.actions';
 
-import { Form, FormControl, FormLabel, FormField, FormItem } from '../ui/form';
+import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from '../ui/form';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
@@ -131,6 +131,7 @@ const AccountProfile: React.FC<Props> = ({ user, btnTitle }) => {
                   onChange={(e) => handleImage(e, field.onChange)}
                 />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -155,6 +156,7 @@ const AccountProfile: React.FC<Props> = ({ user, btnTitle }) => {
               <FormControl>
                 <Input className="account-form_input no-focus" type="text" {...field} />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -167,6 +169,7 @@ const AccountProfile: React.FC<Props> = ({ user, btnTitle }) => {
               <FormControl>
                 <Textarea className="account-form_input no-focus" rows={10} {...field} />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
