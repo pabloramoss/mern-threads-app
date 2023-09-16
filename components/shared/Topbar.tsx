@@ -3,9 +3,12 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { OrganizationSwitcher, SignOutButton, SignedIn } from '@clerk/nextjs';
 import router from 'next/router';
-import { dark } from '@clerk/themes';
 
-const Topbar: React.FC = () => {
+interface Props {
+  userImage: string;
+}
+
+const Topbar: React.FC<Props> = ({ userImage }) => {
   return (
     <nav className="topbar">
       <Link className="flex items-center gap-4" href="/">
@@ -24,9 +27,17 @@ const Topbar: React.FC = () => {
             </SignOutButton>
           </SignedIn>
         </div>
-        <OrganizationSwitcher
+        <div className="relative h-10 w-10 object-cover">
+          <Image
+            fill
+            alt="Profile image"
+            className=" rounded-full object-cover shadow-2xl"
+            src={userImage}
+          />
+        </div>
+        {/* <OrganizationSwitcher
           appearance={{ baseTheme: dark, elements: { organizationSwitcherTrigger: 'py-2 px-4' } }}
-        />
+        /> */}
       </div>
     </nav>
   );

@@ -1,19 +1,17 @@
 'use client';
-// import { createThread } from "@/lib/actions/thread.actions";
-import { zodResolver } from '@hookform/resolvers/zod';
-import { usePathname } from 'next/navigation';
-import { useRouter } from 'next/router';
-import { useForm } from 'react-hook-form';
-import * as z from 'zod';
-import Image from 'next/image';
 
+import { z } from 'zod';
+import Image from 'next/image';
+import { useForm } from 'react-hook-form';
+import { usePathname } from 'next/navigation';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { CommentValidation } from '@/lib/validations/thread';
 import { addCommentToThread } from '@/lib/actions/thread.actions';
 
-import { Button } from '../ui/button';
-import { FormField, FormItem, FormLabel, FormControl, Form } from '../ui/form';
-import { Textarea } from '../ui/textarea';
 import { Input } from '../ui/input';
+import { Button } from '../ui/button';
 
 interface Props {
   threadId: string;
@@ -21,10 +19,10 @@ interface Props {
   currentUserId: string;
 }
 
-const Comment: React.FC<Props> = ({ threadId, currentUserId, currentUserImg }) => {
+function Comment({ threadId, currentUserImg, currentUserId }: Props) {
   const pathname = usePathname();
 
-  const form = useForm({
+  const form = useForm<z.infer<typeof CommentValidation>>({
     resolver: zodResolver(CommentValidation),
     defaultValues: {
       thread: '',
@@ -44,10 +42,10 @@ const Comment: React.FC<Props> = ({ threadId, currentUserId, currentUserImg }) =
           control={form.control}
           name="thread"
           render={({ field }) => (
-            <FormItem className="flex gap-3 items-center w-full">
+            <FormItem className="flex w-full items-center gap-3">
               <FormLabel>
                 <Image
-                  alt="Profile image"
+                  alt="current_user"
                   className="rounded-full object-cover"
                   height={48}
                   src={currentUserImg}
@@ -56,21 +54,22 @@ const Comment: React.FC<Props> = ({ threadId, currentUserId, currentUserImg }) =
               </FormLabel>
               <FormControl className="border-none bg-transparent">
                 <Input
-                  className="no-focus outline-none text-light-1"
-                  placeholder="Comment..."
                   type="text"
                   {...field}
+                  className="no-focus text-light-1 outline-none"
+                  placeholder="Comment..."
                 />
               </FormControl>
             </FormItem>
           )}
         />
+
         <Button className="comment-form_btn" type="submit">
           Reply
         </Button>
       </form>
     </Form>
   );
-};
+}
 
 export default Comment;

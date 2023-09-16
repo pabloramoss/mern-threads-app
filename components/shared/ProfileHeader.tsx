@@ -10,8 +10,6 @@ interface Props {
 }
 
 const ProfileHeader: React.FC<Props> = ({ accountId, authUserId, name, username, imgUrl, bio }) => {
-  console.log('imgUrl', imgUrl);
-
   return (
     <div className="flex w-full flex-col justify-start">
       <div className="flex items-center justify-between">
@@ -30,7 +28,6 @@ const ProfileHeader: React.FC<Props> = ({ accountId, authUserId, name, username,
           </div>
         </div>
       </div>
-      {/* Todo community */}
       <p className="mt-6 max-w-lg text-base-regular text-light-2">{bio}</p>
       <div className="mt-12 h-0.5 w-full bg-dark-3" />
     </div>

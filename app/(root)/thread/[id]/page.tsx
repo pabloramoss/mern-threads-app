@@ -42,7 +42,7 @@ const Page: React.FC<Props> = async ({ params }) => {
       <div className="mt-7 ">
         <Comment
           currentUserId={JSON.stringify(userInfo._id)}
-          currentUserImg={user.imageUrl}
+          currentUserImg={userInfo.image}
           threadId={thread.id}
         />
         <div className="mt-10">

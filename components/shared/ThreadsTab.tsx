@@ -10,18 +10,44 @@ interface Props {
   accountType: string;
 }
 
+interface Result {
+  name: string;
+  image: string;
+  id: string;
+  threads: {
+    _id: string;
+    text: string;
+    parentId: string | null;
+    author: {
+      name: string;
+      image: string;
+      id: string;
+    };
+    community: {
+      id: string;
+      name: string;
+      image: string;
+    } | null;
+    createdAt: string;
+    children: {
+      author: {
+        image: string;
+      };
+    }[];
+  }[];
+}
+
 const ThreadsTab: React.FC<Props> = async ({ currentUserId, accountId, accountType }) => {
-  let result = await fetchUserPosts(accountId);
+  let result: Result = await fetchUserPosts(accountId);
 
   if (!result) redirect('/');
   console.log('result', result.threads);
 
-  // TODO: fetch profile
   return (
     <section className="mt-9 flex flex-col gap-10">
       {result.threads.map((thread: any) => (
         <ThreadCard
-          key={thread.id}
+          key={thread._id}
           author={
             accountType === 'User'
               ? { name: result.name, image: result.image, id: result.id }
