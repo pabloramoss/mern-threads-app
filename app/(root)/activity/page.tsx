@@ -3,8 +3,7 @@ import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 
-import { fetchUser, fetchUsers, getActivity } from '@/lib/actions/user.actions';
-import UserCard from '@/components/cards/UserCard';
+import { fetchUser, getActivity } from '@/lib/actions/user.actions';
 
 const Page: React.FC = async () => {
   const user = await currentUser();
@@ -12,8 +11,6 @@ const Page: React.FC = async () => {
   if (!user) return null;
 
   const userInfo = await fetchUser(user.id);
-
-  console.log('userInfo', userInfo);
 
   if (!userInfo.onboarded) redirect('/onboarding');
 

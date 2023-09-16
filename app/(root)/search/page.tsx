@@ -11,8 +11,6 @@ const Page: React.FC = async () => {
 
   const userInfo = await fetchUser(user.id);
 
-  console.log('userInfo', userInfo);
-
   if (!userInfo.onboarded) redirect('/onboarding');
 
   // Fetch users

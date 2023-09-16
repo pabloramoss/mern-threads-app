@@ -32,7 +32,6 @@ const Comment: React.FC<Props> = ({ threadId, currentUserId, currentUserImg }) =
   });
 
   const onSubmit = async (values: z.infer<typeof CommentValidation>) => {
-    console.log('form', form.getValues());
     await addCommentToThread(threadId, values.thread, JSON.parse(currentUserId), pathname);
 
     form.reset();

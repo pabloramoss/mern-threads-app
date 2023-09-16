@@ -29,7 +29,7 @@ const Page: React.FC<Props> = async ({ params }) => {
         accountId={userInfo.id}
         authUserId={user.id}
         bio={userInfo.bio}
-        imgUrl={userInfo.imgUrl}
+        imgUrl={userInfo.image}
         name={userInfo.name}
         username={userInfo.username}
       />

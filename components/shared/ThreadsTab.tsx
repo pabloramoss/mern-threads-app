@@ -14,6 +14,7 @@ const ThreadsTab: React.FC<Props> = async ({ currentUserId, accountId, accountTy
   let result = await fetchUserPosts(accountId);
 
   if (!result) redirect('/');
+  console.log('result', result.threads);
 
   // TODO: fetch profile
   return (

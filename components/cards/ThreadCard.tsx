@@ -36,6 +36,9 @@ const ThreadCard: React.FC<Props> = ({
   comments,
   isComment,
 }) => {
+  console.log('comments', comments);
+  console.log('content', content);
+
   return (
     <article
       className={`flex w-full flex-col rounded-xl ${isComment ? 'px-0 xs:px-7' : 'bg-dark-2 p-7'}`}
@@ -69,7 +72,7 @@ const ThreadCard: React.FC<Props> = ({
               />
               <Link href={`/thread/${id}`}>
                 <Image
-                  alt="heart"
+                  alt="reply"
                   className="cursor-pointer object-contain"
                   height={24}
                   src="/assets/reply.svg"
@@ -77,17 +80,24 @@ const ThreadCard: React.FC<Props> = ({
                 />
               </Link>
               <Image
-                alt="heart"
+                alt="repost"
                 className="cursor-pointer object-contain"
                 height={24}
                 src="/assets/repost.svg"
                 width={24}
               />
-              <Image
-                alt="heart"
+              {/* <Image
+                alt="share"
                 className="cursor-pointer object-contain"
                 height={24}
                 src="/assets/share.svg"
+                width={24}
+              /> */}
+              <Image
+                alt="discord"
+                className="cursor-pointer object-contain p-[2px]"
+                height={24}
+                src="/assets/discord.svg"
                 width={24}
               />
             </div>
