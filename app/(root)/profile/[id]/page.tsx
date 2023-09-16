@@ -2,11 +2,11 @@ import { currentUser } from '@clerk/nextjs';
 import { redirect } from 'next/navigation';
 import Image from 'next/image';
 
-import PostThread from '@/components/forms/PostThread';
 import { fetchUser } from '@/lib/actions/user.actions';
 import ProfileHeader from '@/components/shared/ProfileHeader';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { profileTabs } from '@/constants';
+import ThreadsTab from '@/components/shared/ThreadsTab';
 
 interface Props {
   params: {
@@ -20,8 +20,6 @@ const Page: React.FC<Props> = async ({ params }) => {
   if (!user) return null;
 
   const userInfo = await fetchUser(params.id);
-
-  console.log('userInfo', userInfo);
 
   if (!userInfo.onboarded) redirect('/onboarding');
 
